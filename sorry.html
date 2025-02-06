@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOMENASAI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 1.5s ease-in;
+        }
+        
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            width: 90%;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+        
+        h1 {
+            color: #4400fdee;
+        }
+        
+        p,
+        label {
+            font-size: 18px;
+            color: #555;
+        }
+        
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #0275d8;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .btn:hover {
+            background-color: #025aa5;
+            transform: scale(1.1);
+        }
+        
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #1a0063;
+        }
+        
+        .response-buttons {
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .response-btn {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            position: absolute;
+        }
+        
+        .accept {
+            background-color: #28a745;
+            color: white;
+            left: 30%;
+        }
+        
+        .reject {
+            background-color: #dc3545;
+            color: white;
+            left: 60%;
+        }
+        /* Animasi tombol */
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>GOMENASAI DINDUT</h1>
+        <p>Pilih alasan mengapa org ini bikin sakit hati:</p>
+        <select id="reason">
+            <option value="karena saya sudah menjadi orang yg menyebalkan ">Orang ini sangat menyebalkan</option>
+            <option value="karena perkataan saya sangat tidak pantas">Perkataan orang ini membuat sakit hati</option>
+            <option value="karena saya mengirim stiker yang tidak pantas"> Orang ini mengirim stiker tidak pantas</option>
+            <option value="karena terlambat menepati janji">Orang ini php</option>
+        </select>
+
+        <p>Tambahkan pesan khusus (Opsional):</p>
+        <textarea id="customMessage" rows="4" placeholder="Tulis pesan tambahan di sini..."></textarea>
+
+        <button class="btn" onclick="sendApology()">Kirim Maaf</button>
+
+        <div class="result" id="apologyMessage"></div>
+
+        <div class="response-buttons" id="responseButtons" style="display: none;">
+            <button class="response-btn accept" onclick="acceptApology()">Dimaafkan</button>
+            <button class="response-btn reject" id="rejectButton" onmouseover="moveButton()">Tidak Dimaafkan</button>
+        </div>
+    </div>
+
+    <script>
+        // Efek fade-in saat halaman dimuat
+        document.addEventListener("DOMContentLoaded", function() {
+            document.body.style.opacity = "1";
+        });
+
+        function sendApology() {
+            let reason = document.getElementById("reason").value;
+            let customMessage = document.getElementById("customMessage").value;
+            let message = "Aku minta maaf " + reason + " dan tidak akan mengulanginya lagi.";
+
+            if (customMessage.trim() !== "") {
+                message += " ";
+            }
+
+            document.getElementById("apologyMessage").innerText = message;
+            document.getElementById("responseButtons").style.display = "block"; // Menampilkan tombol respon
+        }
+
+        function acceptApology() {
+            document.getElementById("apologyMessage").innerText = "Terima kasih! Maafmu diterima 😊";
+            document.getElementById("responseButtons").style.display = "none";
+        }
+
+        function moveButton() {
+            let button = document.getElementById("rejectButton");
+            let container = document.querySelector(".container");
+
+            // Menentukan batas gerakan tombol agar tetap dalam area container
+            let maxX = container.offsetWidth - button.offsetWidth - 20;
+            let maxY = container.offsetHeight - button.offsetHeight - 20;
+
+            // Menghasilkan posisi acak dalam batas tertentu
+            let newX = Math.floor(Math.random() * maxX);
+            let newY = Math.floor(Math.random() * maxY);
+
+            button.style.left = newX + "px";
+            button.style.top = newY + "px";
+        }
+    </script>
+
+</body>
+
+</html>
